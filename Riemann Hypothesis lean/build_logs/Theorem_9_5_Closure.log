@@ -1,0 +1,12 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# build command: lake env lean -o Theorem_9_5_Closure.olean -i Theorem_9_5_Closure.ilean Theorem_9_5_Closure.lean
+# exit code: 0
+# toolchain: Lean (version 4.34.0-rc2, x86_64-unknown-linux-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (lake exe cache get)
+# source sha256: 056e461585fbfcf967e2d9aff2ac8cff7612c1b3d9cfe4259e6fa5ebe9cc8c45
+
+'RH95Final.theorem_9_5_final' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95Final.theorem_10_final' depends on axioms: [propext, Classical.choice, Quot.sound]

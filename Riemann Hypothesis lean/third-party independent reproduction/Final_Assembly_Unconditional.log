@@ -1,0 +1,17 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# third-party independent reproduction
+# host: PC-202607051001
+# build command: lake env lean -o Final_Assembly_Unconditional.olean -i Final_Assembly_Unconditional.ilean Final_Assembly_Unconditional.lean
+# exit code: 0
+# elapsed_ms: 55859
+# toolchain: Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (local cache already present; this run did not download)
+# source sha256: c37f387e3ad0f91ccb0906e6ff904cd00e9a4715f9c67448571ac69e9a4d1ea4
+# source: parent folder, Final_Assembly_Unconditional.lean
+
+'RHFinalM.RH_general_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHFinalM.RH_xi_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHFinalM.RH_xi_zeros_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]

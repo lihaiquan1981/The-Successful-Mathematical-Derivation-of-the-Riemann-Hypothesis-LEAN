@@ -1,0 +1,17 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+SHA-256 of the eleven source files compiled in this run
+Compared with MANIFEST.md in the parent folder.
+2e4e009c89af132ba032e96406dd56560fe0a53b1424afe9a6a93d225d387234  Lemma_9_5C.lean
+366153ea627e2c6d962afd3110ccbc8e1ca2766e36daa1ffd0ee7d941217dcd6  Unitarity_Assembly.lean
+50999ed5f77d5ec1b636c1b0ae826d7a818921a9d9b226187b94b0b0b25eab4a  Lemma_9_4.lean
+056e461585fbfcf967e2d9aff2ac8cff7612c1b3d9cfe4259e6fa5ebe9cc8c45  Theorem_9_5_Closure.lean
+18f6b78d1d8ed6111585c9a28b99779a762c40c787ea5f0dd33ff64144cf42c6  Lemma_11_3.lean
+6f929343c4c771267514a50f3869bc674a51afc25029dc5322c7b4956c4fbd26  Final_Assembly.lean
+abf403369b4a07f705678a85950a38791979a844d06204e7dc5f26bec40240ee  Note_9_5B_mJet.lean
+c37f387e3ad0f91ccb0906e6ff904cd00e9a4715f9c67448571ac69e9a4d1ea4  Final_Assembly_Unconditional.lean
+3db25458843c8305f4af0f79f25d09b51368b3f4a2387de54ee5cadef8d7c2ff  Lemma_9_5C_TaylorRemainder.lean
+9ab78bcef382706708ac9b9618ef8e54b950d065cdd960b578df030639265d55  Theorem_9_3A.lean
+9b01ead8329ecd2a447d7cd0346501aa6fc4d89a8d7b210524b4b31272fcb570  MotherEquation_CoreVerification.lean

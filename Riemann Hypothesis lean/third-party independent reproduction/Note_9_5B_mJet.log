@@ -1,0 +1,34 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# third-party independent reproduction
+# host: PC-202607051001
+# build command: lake env lean -o Note_9_5B_mJet.olean -i Note_9_5B_mJet.ilean Note_9_5B_mJet.lean
+# exit code: 0
+# elapsed_ms: 56879
+# toolchain: Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (local cache already present; this run did not download)
+# source sha256: abf403369b4a07f705678a85950a38791979a844d06204e7dc5f26bec40240ee
+# source: parent folder, Note_9_5B_mJet.lean
+
+Note_9_5B_mJet.lean:89:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+Note_9_5B_mJet.lean:275:42: warning: Variable name `hC` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hC
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'RHM.exists_iteratedDeriv_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.iteratedDeriv_reflA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.iteratedDeriv_reflB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.jetOrder_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.jetOrder_one_sub_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.theorem_9_5_multiplicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHM.theorem_10_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]

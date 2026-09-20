@@ -1,0 +1,21 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# build command: lake env lean -o Lemma_11_3.olean -i Lemma_11_3.ilean Lemma_11_3.lean
+# exit code: 0
+# toolchain: Lean (version 4.34.0-rc2, x86_64-unknown-linux-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (lake exe cache get)
+# source sha256: 18f6b78d1d8ed6111585c9a28b99779a762c40c787ea5f0dd33ff64144cf42c6
+
+'RH113.xiFn_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.zeta_re_pos_of_one_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiFn_ofReal_of_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiReal_pos_of_Ioo' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiReal_pos_of_one_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiFn_pos_ofReal_of_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.lemma_11_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiFn_ne_zero_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.gFn_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.xiFn_ne_zero_of_w_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH113.critical_line_lock' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,16 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# third-party independent reproduction
+# host: PC-202607051001
+# build command: lake env lean -o Lemma_9_5C_TaylorRemainder.olean -i Lemma_9_5C_TaylorRemainder.ilean Lemma_9_5C_TaylorRemainder.lean
+# exit code: 0
+# elapsed_ms: 32042
+# toolchain: Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (local cache already present; this run did not download)
+# source sha256: 3db25458843c8305f4af0f79f25d09b51368b3f4a2387de54ee5cadef8d7c2ff
+# source: parent folder, Lemma_9_5C_TaylorRemainder.lean
+
+'RHT.taylor_remainder_C2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RHT.lemma_9_5C_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]

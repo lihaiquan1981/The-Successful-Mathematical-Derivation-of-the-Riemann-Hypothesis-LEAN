@@ -1,0 +1,15 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# build command: lake env lean -o Theorem_9_3A.olean -i Theorem_9_3A.ilean Theorem_9_3A.lean
+# exit code: 0
+# toolchain: Lean (version 4.34.0-rc2, x86_64-unknown-linux-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (lake exe cache get)
+# source sha256: 9ab78bcef382706708ac9b9618ef8e54b950d065cdd960b578df030639265d55
+
+'RH93.theorem_9_3A' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH93.h_eq_g_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH93.g_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH93.g_real_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH93.unique_rep' depends on axioms: [propext, Classical.choice, Quot.sound]
