@@ -1,13 +1,14 @@
 import Mathlib
 
 /-!
-# Challenge: A machine-checked structural group for doubly reflected entire
-functions and Riemann's xi
+# Challenge: A machine-checked structural and spectral group for doubly
+reflected entire functions and Riemann's xi
 
-This module states a group of six theorems forming the structural core of
-the paper "The Successful Mathematical Derivation of the Forward-Reverse
-Reversible Bidirectional Closure of the Riemann Hypothesis" (Li Haiquan),
-Sections 9.3A, 9.4, 9.5C and 11.3. Four of the six are fully unconditional;
+This module states a group of eight theorems forming the structural,
+analytic and spectral core of the paper "The Successful Mathematical
+Derivation of the Forward-Reverse Reversible Bidirectional Closure of the
+Riemann Hypothesis" (Li Haiquan), Sections 9.3A, 9.4, 9.5C, 11.3 and the
+Mother-Equation core certificate. Six of the eight are fully unconditional;
 two carry a single named classical premise (the strict negativity of ζ on
 the real interval (0, 1), a standard classical fact stated as an explicit
 hypothesis).
@@ -43,14 +44,34 @@ The group, in the paper's logical order:
     negative real, then Re s = 1/2. Unconditional.
 
 (6) `heat_kernel_spectral` (namespace `RHHeat`) — the heat-kernel spectral
-    limit of the two-channel orbit energy (Lemma 9.5C). For the geometric
-    energy of a field on the four-point orbit, regularized by the Gaussian
-    heat kernel of parameter α: (i) the rescaled energy E(α)/α converges
-    (α → 0⁺) to the explicit quadratic form K̃ on the eight-dimensional
-    orbit-gradient space; (ii) on χAB-type configurations the limit form is
-    strictly negative definite. Unconditional (the FieldData bundle carries
-    the standard first-order Taylor remainder bound of a bounded field — an
-    analysis hypothesis on the field data, not a zero-location premise).
+    limit of the two-channel orbit energy (Lemma 9.5C), including the
+    explicit limit form: (i) the rescaled energy E(α)/α converges (α → 0⁺)
+    to the quadratic form K̃ on the eight-dimensional orbit-gradient space;
+    (ii) on χAB-type configurations the limit form is given by the
+    identity ⟨W, K̃W⟩ = −(C/2)·Σᵢ‖wᵢ‖²; (iii) hence it is strictly
+    negative on nonzero χAB-type configurations. Unconditional. The
+    FieldData bundle is an abstract data package (bounded measurable
+    field, four centers, center gradients, uniform quadratic first-order
+    remainder bound around the centers — which in particular forces the
+    field to vanish at the four centers); it does not presuppose the
+    orbit geometry or C² smoothness. In the repository the bundle is
+    instantiated by the four-point reflection orbit and the germ
+    gradients of Lemma 9.4.
+
+(7) `two_channel_kernel_spectrum` (namespace `RHMother`) — the complete
+    four-mode spectral resolution of the regularized two-channel orbit
+    kernel over ℤ (doubled normalization): the eigenvalue list
+    {2C+2ε, 2ε, 2ε, −2C+2ε} on the modes {χ0, χA, χB, χAB}, the unitarity
+    sign discrimination under the intrinsic boundary C > ε > 0, and the
+    phase-transition cliff (minimal eigenvalue jump of exactly 2C between
+    collapsed and expanded orbits). Unconditional.
+
+(8) `jet_lift_inheritance` (namespace `RHMother`) — the eight-dimensional
+    gradient-jet lift: the simple-zero gradient pattern
+    W = (a, b, a, −b, −a, b, −a, −b) inherits the negative eigenvalue
+    under the lifted kernel, with the explicit energy identity
+    E8 = 4(a²+b²)(−2C+2ε), hence strictly negative energy for a nonzero
+    gradient. Unconditional.
 
 Together (3)–(5) state, for real values of the quotient coordinate, the
 complete zero-location alternative for ξ: nonnegative ⇒ excluded;
@@ -176,8 +197,11 @@ instance (α : ℝ) : IsProbabilityMeasure (G α) :=
 instance (α : ℝ) : IsProbabilityMeasure (P α) :=
   inferInstanceAs (IsProbabilityMeasure ((G α).prod (G α)))
 
-/-- Field data bundle: the field Φ, the four-point orbit s, the orbit
-    gradients w, and the quadratic Taylor-remainder constant M. -/
+/-- Field data bundle: the field Φ, the four centers s, the center
+    gradients w, and the quadratic Taylor-remainder constant M.
+    This is an abstract data package: it does not presuppose that the
+    centers form a reflection orbit, nor that Φ is C²; note that the
+    remainder bound at u = 0 forces Φ to vanish at the four centers. -/
 structure FieldData where
   Φ : ℝ × ℝ → ℝ
   s : Fin 4 → ℝ × ℝ
@@ -199,12 +223,16 @@ noncomputable def Kquad (C : ℝ) (w : Fin 4 → ℝ × ℝ) : ℝ :=
   (C/4) * ∑ i : Fin 4, (dot (w i) (JA (w (iA i))) + dot (w i) (JB (w (iB i))))
 
 /-- **Lemma 9.5C** (heat-kernel spectral limit for the two-channel orbit
-    energy). (i) The rescaled regularized energy converges to the K̃
-    quadratic form; (ii) on chi_AB-type configurations the limit form is
-    strictly negative definite, ⟨W, K̃ W⟩ = −(C/2)‖W‖² < 0. -/
+    energy, with the explicit limit form). (i) The rescaled regularized
+    energy converges to the K̃ quadratic form; (ii) on chi_AB-type
+    configurations the limit form is given by the identity
+    ⟨W, K̃ W⟩ = −(C/2)·Σᵢ‖wᵢ‖²; (iii) hence it is strictly negative on
+    nonzero chi_AB-type configurations. -/
 theorem heat_kernel_spectral (D : FieldData) (hC : 0 < C) :
     (Filter.Tendsto (fun α => Egeom D C α / α) (nhdsWithin 0 (Set.Ioi 0))
       (nhds (Kquad C D.w))) ∧
+    ((∀ i, D.w (iA i) = JB (D.w i)) → (∀ i, D.w (iB i) = JA (D.w i)) →
+      Kquad C D.w = -(C/2) * ∑ i : Fin 4, (nrm2 (D.w i)) ^ 2) ∧
     ((∀ i, D.w (iA i) = JB (D.w i)) → (∀ i, D.w (iB i) = JA (D.w i)) →
       (∃ i : Fin 4, D.w i ≠ 0) → Kquad C D.w < 0) := by
   sorry
@@ -212,3 +240,103 @@ theorem heat_kernel_spectral (D : FieldData) (hC : 0 < C) :
 end
 
 end RHHeat
+
+namespace RHMother
+
+/-- Integer 4-vectors: fields on the four-point orbit (doubled normalization
+    G = 2·Kgeom; all eigenvalues are scaled by the same factor 2, so sign
+    conclusions coincide with the original normalization). -/
+abbrev V4v := Int × Int × Int × Int
+
+/-- Scalar multiplication on orbit fields. -/
+def smul4 (s : Int) (v : V4v) : V4v := (s * v.1, s * v.2.1, s * v.2.2.1, s * v.2.2.2)
+
+/-- Addition on orbit fields. -/
+def vadd4 (u v : V4v) : V4v := (u.1 + v.1, u.2.1 + v.2.1, u.2.2.1 + v.2.2.1, u.2.2.2 + v.2.2.2)
+
+/-- The four eigenmodes: trivial / χA / χB / χAB. -/
+def v0 : V4v := (1, 1, 1, 1)
+def vA : V4v := (1, -1, 1, -1)
+def vB : V4v := (1, 1, -1, -1)
+def vAB : V4v := (1, -1, -1, 1)
+
+/-- Doubled-normalization geometric kernel G = C·(KA+KB). -/
+def gK (C : Int) (v : V4v) : V4v :=
+  (C * (v.2.1 + v.2.2.1), C * (v.1 + v.2.2.2), C * (v.1 + v.2.2.2), C * (v.2.1 + v.2.2.1))
+
+/-- Doubled-normalization regularized kernel R = G + 2εI. -/
+def rK (C ε : Int) (v : V4v) : V4v := vadd4 (gK C v) (smul4 (2 * ε) v)
+
+/-- Minimal-eigenvalue function: −2C+2ε on the expanded (non-collapsed)
+    orbit, 2ε on the collapsed orbit. -/
+def minEig (collapsed : Bool) (C ε : Int) : Int :=
+  if collapsed then 2 * ε else -2 * C + 2 * ε
+
+/-- **Two-channel kernel spectrum** (Mother-Equation core certificate,
+    Parts III and VI): the complete four-mode spectral resolution of the
+    regularized two-channel orbit kernel over ℤ — eigenvalue list
+    {2C+2ε, 2ε, 2ε, −2C+2ε} on {χ0, χA, χB, χAB} — together with the
+    unitarity sign discrimination under the intrinsic boundary C > ε > 0
+    and the phase-transition cliff (jump of exactly 2C, no intermediate
+    state). Unconditional. -/
+theorem two_channel_kernel_spectrum (C ε : Int) (hC : C > ε) (hε : ε > 0) :
+    (rK C ε v0 = smul4 (2 * C + 2 * ε) v0)
+    ∧ (rK C ε vA = smul4 (2 * ε) vA)
+    ∧ (rK C ε vB = smul4 (2 * ε) vB)
+    ∧ (rK C ε vAB = smul4 (-2 * C + 2 * ε) vAB)
+    ∧ (-2 * C + 2 * ε < 0 ∧ 2 * C + 2 * ε > 0 ∧ 2 * ε > 0)
+    ∧ (minEig false C ε < 0 ∧ minEig true C ε > 0 ∧
+        minEig true C ε - minEig false C ε = 2 * C) := by
+  sorry
+
+/-- Integer 8-vectors: gradient jets on the four-point orbit. -/
+abbrev V8 := Int × Int × Int × Int × Int × Int × Int × Int
+
+/-- Gradient pattern of a simple zero (the χAB-type vector forced by the
+    double-reflection symmetry). -/
+def W8 (a b : Int) : V8 := (a, b, a, -b, -a, b, -a, -b)
+
+/-- The 8-dimensional doubled-normalization geometric kernel
+    G8 = C·(PA⊗JA + PB⊗JB). -/
+def g8 (C : Int) (w : V8) : V8 :=
+  match w with
+  | (x1, y1, x2, y2, x3, y3, x4, y4) =>
+    (C * (-x2 + x3), C * (y2 - y3),
+     C * (-x1 + x4), C * (y1 - y4),
+     C * (-x4 + x1), C * (y4 - y1),
+     C * (-x3 + x2), C * (y3 - y2))
+
+/-- Scalar multiplication on jet vectors. -/
+def smul8 (s : Int) (w : V8) : V8 :=
+  match w with
+  | (x1, y1, x2, y2, x3, y3, x4, y4) =>
+    (s * x1, s * y1, s * x2, s * y2, s * x3, s * y3, s * x4, s * y4)
+
+/-- Addition on jet vectors. -/
+def vadd8 (u v : V8) : V8 :=
+  match u, v with
+  | (x1, y1, x2, y2, x3, y3, x4, y4), (x1', y1', x2', y2', x3', y3', x4', y4') =>
+    (x1 + x1', y1 + y1', x2 + x2', y2 + y2', x3 + x3', y3 + y3', x4 + x4', y4 + y4')
+
+/-- The 8-dimensional regularized kernel R8 = G8 + 2εI. -/
+def r8 (C ε : Int) (w : V8) : V8 := vadd8 (g8 C w) (smul8 (2 * ε) w)
+
+/-- Dot product on jet vectors. -/
+def dot8 (u v : V8) : Int :=
+  match u, v with
+  | (x1, y1, x2, y2, x3, y3, x4, y4), (x1', y1', x2', y2', x3', y3', x4', y4') =>
+    x1 * x1' + y1 * y1' + x2 * x2' + y2 * y2' + x3 * x3' + y3 * y3' + x4 * x4' + y4 * y4'
+
+/-- **Jet lift inheritance** (Mother-Equation core certificate, Part V):
+    the eight-dimensional gradient jet W = (a, b, a, −b, −a, b, −a, −b) of
+    a simple zero inherits the negative eigenvalue under the lifted
+    regularized kernel, with the explicit energy identity
+    E8 = 4(a²+b²)(−2C+2ε); hence a nonzero gradient induces strictly
+    negative energy. Unconditional. -/
+theorem jet_lift_inheritance (C ε a b : Int) (hC : C > ε) (hε : ε > 0) :
+    (r8 C ε (W8 a b) = smul8 (-2 * C + 2 * ε) (W8 a b))
+    ∧ (dot8 (W8 a b) (r8 C ε (W8 a b)) = 4 * (a * a + b * b) * (-2 * C + 2 * ε))
+    ∧ ((a ≠ 0 ∨ b ≠ 0) → dot8 (W8 a b) (r8 C ε (W8 a b)) < 0) := by
+  sorry
+
+end RHMother

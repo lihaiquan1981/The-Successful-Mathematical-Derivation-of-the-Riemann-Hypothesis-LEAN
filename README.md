@@ -25,32 +25,32 @@ two editions, this English edition prevails.
 
 ## Palomar Registration (compared declarations)
 
-The registered result is a **group of six theorems** forming the structural
-and analytic core of the paper (Sections 9.3A, 9.4, 9.5C, 11.3), stated in
-Mathlib-native terms in `Challenge.lean` and proved in `Solution.lean` by
-reduction to the repository modules:
+The registered result is a **group of eight theorems** forming the structural,
+analytic and spectral core of the paper (Sections 9.3A, 9.4, 9.5C, 11.3 and
+the Mother-Equation core), stated in Mathlib-native / integer-ring terms in
+`Challenge.lean` and proved in `Solution.lean` by reduction to the repository
+modules:
 
 | Compared declaration | Paper | Content | Premises |
 |---|---|---|---|
-| `RHStructural.structural_reduction_9_3A` | Thm 9.3A | Unique factorization f(s) = g((s−1/2)²) through the symmetry quotient, g entire and real-valued on ℝ; zeros of f are the preimage under s ↦ (s−1/2)² of zeros of g (Klein four-group orbit structure) | none |
-| `RHStructural.germ_structure_9_4` | Lem 9.4 | v = Im f is odd under both reflections, vanishes on the critical line and the real axis, and has nonzero real gradient at simple zeros (Cauchy–Riemann) | none |
-| `RHStructural.real_axis_positivity_11_3` | Lem 11.3 | ξ(x) is a strictly positive real for real x ∉ {0, 1} | hζ (classical: ζ < 0 on (0,1)) |
-| `RHStructural.xi_ne_zero_of_quotient_nonneg` | §11.3 | (s−1/2)² a nonnegative real (≠ 1/4) ⇒ ξ(s) ≠ 0 | hζ |
-| `RHStructural.critical_line_lock` | §11.3 | (s−1/2)² a negative real ⇒ Re s = 1/2 | none |
-| `RHHeat.heat_kernel_spectral` | Lem 9.5C | Heat-kernel spectral limit of the two-channel orbit energy: E(α)/α → K̃ quadratic form (α → 0⁺); K̃ strictly negative definite on χAB-type configurations | none (FieldData carries the standard Taylor-remainder analysis hypothesis on the field) |
+| `RHStructural.structural_reduction_9_3A` | Thm 9.3A | Unique factorization f(s) = g((s−1/2)²) through the symmetry quotient; zeros of f are the q-preimage of zeros of g | none |
+| `RHStructural.germ_structure_9_4` | Lem 9.4 | v = Im f odd under both reflections; vanishes on critical line and real axis; nonzero real gradient at simple zeros | none |
+| `RHStructural.real_axis_positivity_11_3` | Lem 11.3 | ξ(x) strictly positive real for real x ∉ {0, 1} | hζ (classical: ζ < 0 on (0,1)) |
+| `RHStructural.xi_ne_zero_of_quotient_nonneg` | §11.3 | (s−1/2)² nonnegative real (≠ 1/4) ⇒ ξ(s) ≠ 0 | hζ |
+| `RHStructural.critical_line_lock` | §11.3 | (s−1/2)² negative real ⇒ Re s = 1/2 | none |
+| `RHHeat.heat_kernel_spectral` | Lem 9.5C | E(α)/α → K̃; on χAB configs the identity Kquad = −(C/2)Σ‖wᵢ‖² holds and implies strict negativity | none (FieldData: abstract remainder bound) |
+| `RHMother.two_channel_kernel_spectrum` | Mother Eq. | Four-mode eigenvalues {2C+2ε, 2ε, 2ε, −2C+2ε}; sign pattern under C>ε>0; phase cliff jump 2C | none |
+| `RHMother.jet_lift_inheritance` | Mother Eq. | Jet lift: r8(W8)=(−2C+2ε)W8, energy E8=4(a²+b²)(−2C+2ε), strict negativity on nonzero jets | none |
 
-Together, the 11.3-family declarations give the complete zero-location
-alternative for ξ over real values of the quotient coordinate: nonnegative
-⇒ excluded; negative ⇒ critical line. The conditional chain (unitarity gate
-→ final RH assembly) remains in the repository as an extension and is
-**not** the registered result.
+The conditional chain (unitarity gate → final RH assembly) remains in the
+repository as an extension and is **not** the registered result.
 
 ## File ↔ Paper Section Correspondence
 
 | File | Lean module / namespace | Paper content | Depends on |
 |---|---|---|---|
 | `MotherEquation_CoreVerification.lean` | `MotherEquation` (incl. `V4`) | Algebraic heart of the Mother Equation: Klein four-group, χAB=(1,−1,−1,1), four-mode spectrum {+2C,0,0,−2C}, 8-dim Jet lift, phase-transition cliff | none (core library) |
-| `Theorem_9_3A.lean` | `RH93` | Theorem 9.3A (quotient factorization f(s) = g((s−1/2)²), unique, g real-valued on ℝ) | mathlib |
+| `Theorem_9_3A.lean` | `RH93` | Theorem 9.3A (structural factorization through the symmetry quotient) | mathlib |
 | `Lemma_9_5C.lean` | `RH95C` | Lemma 9.5C (¶593–627): gaussianReal heat kernel, moment scaling laws m₃(α)=(√α)³C₃, m₄(α)=α²C₄, main term channel_main, energy error bound, heat-kernel limit, χAB negative definiteness `Kquad_chiAB_neg` | mathlib |
 | `Unitarity_Assembly.lean` | `RH95U` | Theorems 9.5/10 (hgrad hypothesis-interface version): four-point orbit, orbit injectivity, UnitarityPositive interface | Lemma_9_5C |
 | `Lemma_9_4.lean` | `RH94` | Lemma 9.4 (¶467–536): vim double reflection, fixed-line vanishing, Cauchy–Riemann gradients `hasDerivAt_vim_x/y`, gradient reflection laws `nablaV_reflA/B`, orbit gradient identity `orbitGrad_eq` (w=(a,b,a,−b,−a,b,−a,−b)), `hgrad_of_simple_zero` | Unitarity_Assembly |

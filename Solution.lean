@@ -3,25 +3,32 @@ import Theorem_9_3A
 import Lemma_9_4
 import Lemma_11_3
 import Lemma_9_5C
+import MotherEquation_CoreVerification
 
 /-!
 # Solution
 
-Proves the six compared theorems of the structural group by the standalone
-machine-verified developments of the repository:
+Proves the eight compared theorems of the structural and spectral group by
+the standalone machine-verified developments of the repository:
 
-* `structural_reduction_9_3A`     — `RH93.theorem_9_3A` (Theorem_9_3A.lean)
-* `germ_structure_9_4`            — `RH94.lemma_9_4` (Lemma_9_4.lean)
-* `real_axis_positivity_11_3`     — `RH113.lemma_11_3` (Lemma_11_3.lean)
-* `xi_ne_zero_of_quotient_nonneg` — `RH113.xiFn_ne_zero_of_w_nonneg`
-* `critical_line_lock`            — `RH113.critical_line_lock`
-* `RHHeat.heat_kernel_spectral`   — `RH95C.lemma_9_5C` (Lemma_9_5C.lean),
-  via the definitionally-equal field-data bridge `RHHeat.toRH95C`
+* `structural_reduction_9_3A`        — `RH93.theorem_9_3A` (Theorem_9_3A.lean)
+* `germ_structure_9_4`               — `RH94.lemma_9_4` (Lemma_9_4.lean)
+* `real_axis_positivity_11_3`        — `RH113.lemma_11_3` (Lemma_11_3.lean)
+* `xi_ne_zero_of_quotient_nonneg`    — `RH113.xiFn_ne_zero_of_w_nonneg`
+* `critical_line_lock`               — `RH113.critical_line_lock`
+* `RHHeat.heat_kernel_spectral`      — `RH95C.lemma_9_5C` (limit and
+  negativity) together with `RH95C.Kquad_chiAB` (the explicit limit-form
+  identity), via the definitionally-equal field-data bridge
+  `RHHeat.toRH95C` (Lemma_9_5C.lean)
+* `RHMother.two_channel_kernel_spectrum` — `MotherEquation.rK_eig_chi0/chiA/
+  chiB/chiAB`, `MotherEquation.unitarity_sign`, `MotherEquation.phase_cliff`
+  (MotherEquation_CoreVerification.lean)
+* `RHMother.jet_lift_inheritance`    — `MotherEquation.jet_eigenvalue`,
+  `MotherEquation.jet_energy`, `MotherEquation.jet_negative`
 
 Challenge and Solution are separate Lake libraries (Palomar template
 layout); each compared declaration is restated here with the same
-signature, in Mathlib-native terms, and closed by reduction to the
-corresponding repository theorem.
+signature and closed by reduction to the corresponding repository theorem.
 -/
 
 namespace RHStructural
@@ -137,7 +144,7 @@ instance (α : ℝ) : IsProbabilityMeasure (G α) :=
 instance (α : ℝ) : IsProbabilityMeasure (P α) :=
   inferInstanceAs (IsProbabilityMeasure ((G α).prod (G α)))
 
-/-- Field data bundle: the field Φ, the four-point orbit s, the orbit
+/-- Field data bundle: the field Φ, the four centers s, the center
     gradients w, and the quadratic Taylor-remainder constant M. -/
 structure FieldData where
   Φ : ℝ × ℝ → ℝ
@@ -170,17 +177,124 @@ def toRH95C (D : FieldData) : RH95C.FieldData where
   hbound := D.hbound
   htaylor := D.htaylor
 
-/-- **Lemma 9.5C** (heat-kernel spectral limit for the two-channel orbit
-    energy). (i) The rescaled regularized energy converges to the K̃
-    quadratic form; (ii) on chi_AB-type configurations the limit form is
-    strictly negative definite, ⟨W, K̃ W⟩ = −(C/2)‖W‖² < 0. -/
+/-- **Lemma 9.5C** (heat-kernel spectral limit with the explicit limit
+    form). Limit and negativity: `RH95C.lemma_9_5C`; the identity
+    ⟨W, K̃ W⟩ = −(C/2)·Σᵢ‖wᵢ‖²: `RH95C.Kquad_chiAB`. The repository's
+    abbreviations (`RH95C.Kquad`, `RH95C.nrm2`, `RH95C.iA/iB`,
+    `RH95C.JA/JB`) are definitionally equal to the copies above. -/
 theorem heat_kernel_spectral (D : FieldData) (hC : 0 < C) :
     (Filter.Tendsto (fun α => Egeom D C α / α) (nhdsWithin 0 (Set.Ioi 0))
       (nhds (Kquad C D.w))) ∧
     ((∀ i, D.w (iA i) = JB (D.w i)) → (∀ i, D.w (iB i) = JA (D.w i)) →
-      (∃ i : Fin 4, D.w i ≠ 0) → Kquad C D.w < 0) :=
-  RH95C.lemma_9_5C (toRH95C D) hC
+      Kquad C D.w = -(C/2) * ∑ i : Fin 4, (nrm2 (D.w i)) ^ 2) ∧
+    ((∀ i, D.w (iA i) = JB (D.w i)) → (∀ i, D.w (iB i) = JA (D.w i)) →
+      (∃ i : Fin 4, D.w i ≠ 0) → Kquad C D.w < 0) := by
+  refine ⟨?_, ?_, ?_⟩
+  · exact (RH95C.lemma_9_5C (toRH95C D) hC).1
+  · intro hA hB
+    exact RH95C.Kquad_chiAB C D.w hA hB
+  · exact (RH95C.lemma_9_5C (toRH95C D) hC).2
 
 end
 
 end RHHeat
+
+namespace RHMother
+
+/-- Integer 4-vectors: fields on the four-point orbit (doubled normalization). -/
+abbrev V4v := Int × Int × Int × Int
+
+/-- Scalar multiplication on orbit fields. -/
+def smul4 (s : Int) (v : V4v) : V4v := (s * v.1, s * v.2.1, s * v.2.2.1, s * v.2.2.2)
+
+/-- Addition on orbit fields. -/
+def vadd4 (u v : V4v) : V4v := (u.1 + v.1, u.2.1 + v.2.1, u.2.2.1 + v.2.2.1, u.2.2.2 + v.2.2.2)
+
+/-- The four eigenmodes: trivial / χA / χB / χAB. -/
+def v0 : V4v := (1, 1, 1, 1)
+def vA : V4v := (1, -1, 1, -1)
+def vB : V4v := (1, 1, -1, -1)
+def vAB : V4v := (1, -1, -1, 1)
+
+/-- Doubled-normalization geometric kernel G = C·(KA+KB). -/
+def gK (C : Int) (v : V4v) : V4v :=
+  (C * (v.2.1 + v.2.2.1), C * (v.1 + v.2.2.2), C * (v.1 + v.2.2.2), C * (v.2.1 + v.2.2.1))
+
+/-- Doubled-normalization regularized kernel R = G + 2εI. -/
+def rK (C ε : Int) (v : V4v) : V4v := vadd4 (gK C v) (smul4 (2 * ε) v)
+
+/-- Minimal-eigenvalue function: −2C+2ε on the expanded orbit, 2ε on the
+    collapsed orbit. -/
+def minEig (collapsed : Bool) (C ε : Int) : Int :=
+  if collapsed then 2 * ε else -2 * C + 2 * ε
+
+/-- **Two-channel kernel spectrum**. Proved by the Mother-Equation core
+    certificate (`MotherEquation.rK_eig_*`, `MotherEquation.unitarity_sign`,
+    `MotherEquation.phase_cliff`); the repository's definitions are
+    definitionally equal to the copies above. -/
+theorem two_channel_kernel_spectrum (C ε : Int) (hC : C > ε) (hε : ε > 0) :
+    (rK C ε v0 = smul4 (2 * C + 2 * ε) v0)
+    ∧ (rK C ε vA = smul4 (2 * ε) vA)
+    ∧ (rK C ε vB = smul4 (2 * ε) vB)
+    ∧ (rK C ε vAB = smul4 (-2 * C + 2 * ε) vAB)
+    ∧ (-2 * C + 2 * ε < 0 ∧ 2 * C + 2 * ε > 0 ∧ 2 * ε > 0)
+    ∧ (minEig false C ε < 0 ∧ minEig true C ε > 0 ∧
+        minEig true C ε - minEig false C ε = 2 * C) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact MotherEquation.rK_eig_chi0 C ε
+  · exact MotherEquation.rK_eig_chiA C ε
+  · exact MotherEquation.rK_eig_chiB C ε
+  · exact MotherEquation.rK_eig_chiAB C ε
+  · exact MotherEquation.unitarity_sign C ε hC hε
+  · exact MotherEquation.phase_cliff C ε hC hε
+
+/-- Integer 8-vectors: gradient jets on the four-point orbit. -/
+abbrev V8 := Int × Int × Int × Int × Int × Int × Int × Int
+
+/-- Gradient pattern of a simple zero (the χAB-type vector forced by the
+    double-reflection symmetry). -/
+def W8 (a b : Int) : V8 := (a, b, a, -b, -a, b, -a, -b)
+
+/-- The 8-dimensional doubled-normalization geometric kernel. -/
+def g8 (C : Int) (w : V8) : V8 :=
+  match w with
+  | (x1, y1, x2, y2, x3, y3, x4, y4) =>
+    (C * (-x2 + x3), C * (y2 - y3),
+     C * (-x1 + x4), C * (y1 - y4),
+     C * (-x4 + x1), C * (y4 - y1),
+     C * (-x3 + x2), C * (y3 - y2))
+
+/-- Scalar multiplication on jet vectors. -/
+def smul8 (s : Int) (w : V8) : V8 :=
+  match w with
+  | (x1, y1, x2, y2, x3, y3, x4, y4) =>
+    (s * x1, s * y1, s * x2, s * y2, s * x3, s * y3, s * x4, s * y4)
+
+/-- Addition on jet vectors. -/
+def vadd8 (u v : V8) : V8 :=
+  match u, v with
+  | (x1, y1, x2, y2, x3, y3, x4, y4), (x1', y1', x2', y2', x3', y3', x4', y4') =>
+    (x1 + x1', y1 + y1', x2 + x2', y2 + y2', x3 + x3', y3 + y3', x4 + x4', y4 + y4')
+
+/-- The 8-dimensional regularized kernel R8 = G8 + 2εI. -/
+def r8 (C ε : Int) (w : V8) : V8 := vadd8 (g8 C w) (smul8 (2 * ε) w)
+
+/-- Dot product on jet vectors. -/
+def dot8 (u v : V8) : Int :=
+  match u, v with
+  | (x1, y1, x2, y2, x3, y3, x4, y4), (x1', y1', x2', y2', x3', y3', x4', y4') =>
+    x1 * x1' + y1 * y1' + x2 * x2' + y2 * y2' + x3 * x3' + y3 * y3' + x4 * x4' + y4 * y4'
+
+/-- **Jet lift inheritance**. Proved by `MotherEquation.jet_eigenvalue`,
+    `MotherEquation.jet_energy` and `MotherEquation.jet_negative`. -/
+theorem jet_lift_inheritance (C ε a b : Int) (hC : C > ε) (hε : ε > 0) :
+    (r8 C ε (W8 a b) = smul8 (-2 * C + 2 * ε) (W8 a b))
+    ∧ (dot8 (W8 a b) (r8 C ε (W8 a b)) = 4 * (a * a + b * b) * (-2 * C + 2 * ε))
+    ∧ ((a ≠ 0 ∨ b ≠ 0) → dot8 (W8 a b) (r8 C ε (W8 a b)) < 0) := by
+  refine ⟨?_, ?_, ?_⟩
+  · exact MotherEquation.jet_eigenvalue C ε a b
+  · exact MotherEquation.jet_energy C ε a b
+  · intro hne
+    exact MotherEquation.jet_negative C ε a b hC hε hne
+
+end RHMother
