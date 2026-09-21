@@ -1,6 +1,6 @@
 version: v0.4
 project:
-  name: Machine-verified theory of doubly reflected systems: structural factorization, germ reflection structure, heat-kernel spectral limits, and real-axis positivity of Riemann's xi
+  name: "Machine-verified theory of doubly reflected systems: structural factorization, germ reflection structure, heat-kernel spectral limits, and real-axis positivity of Riemann's xi"
   description: |
     This development is a Lean 4 formalization of a theorem group from the
     preprint "The Successful Mathematical Derivation of the Forward-Reverse
