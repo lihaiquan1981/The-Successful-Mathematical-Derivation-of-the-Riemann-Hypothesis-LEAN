@@ -1,0 +1,31 @@
+name = "RHClosure"
+defaultTargets = ["RHClosure", "Challenge", "Solution"]
+
+[[lean_lib]]
+name = "RHClosure"
+roots = [
+  "Lemma_9_5C",
+  "Unitarity_Assembly",
+  "Lemma_9_4",
+  "Theorem_9_5_Closure",
+  "Lemma_11_3",
+  "Final_Assembly",
+  "Note_9_5B_mJet",
+  "Final_Assembly_Unconditional",
+  "Lemma_9_5C_TaylorRemainder",
+  "Theorem_9_3A",
+  "MotherEquation_CoreVerification",
+]
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+version = "git#v4.34.0-rc2"

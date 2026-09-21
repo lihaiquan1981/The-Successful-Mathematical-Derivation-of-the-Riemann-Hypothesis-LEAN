@@ -1,0 +1,76 @@
+version: v0.4
+project:
+  name: Machine checked conditional reduction of the Riemann Hypothesis via the Mother Equation unitarity gate
+  description: |
+    This development is a Lean 4 formalization of the conditional core of the
+    preprint "The Successful Mathematical Derivation of the Forward-Reverse
+    Reversible Bidirectional Closure of the Riemann Hypothesis" (Li Haiquan).
+
+    FORMAL CLAIM. Let xi be Riemann's 1859 xi function, xi s = (s (s - 1) / 2) *
+    completedRiemannZeta s, whose zeros off {0, 1} are, inside the critical strip,
+    exactly the nontrivial zeros of the Riemann zeta function. For a channel
+    coupling C > 0 and an entire function g agreeing with xi off {0, 1}, the
+    compared theorem states: if g is doubly reflected (g (1 - s) = g s and
+    g (star s) = star (g s)), has only simple zeros, satisfies the unitarity
+    gate SatisfiesUnitarity C g (strictly positive energy of the forced four
+    point orbit gradient at every non real zero of g), and zeta is negative on
+    the real interval (0, 1), then every zero of xi off {0, 1} lies on the
+    critical line Re s = 1/2. By the classical correspondence of zeros inside
+    the critical strip, this is the standard Riemann Hypothesis.
+
+    SCOPE AND GAP. The artifact proves the reduction. The unitarity gate and the
+    classical input appear as explicit hypotheses and are not discharged inside
+    Lean. The associated paper argues for their discharge in a non formal
+    framework; that argument is outside this artifact. This is therefore exactly
+    a machine checked conditional reduction of the Riemann Hypothesis to the named
+    premise, not an unconditional formal proof of it.
+
+    EVIDENCE. Eleven modules, zero sorry, only the three standard Lean axioms
+    (propext, Quot.sound, Classical.choice). All modules compiled with exit code 0
+    in an independent third party reproduction (Windows, Lean 4.34.0-rc2, mathlib
+    cache in place), and the sources match a committed SHA 256 manifest.
+
+    AUDIENCE. Formal verification and analytic number theory: a fully auditable
+    conditional statement of the Riemann Hypothesis whose premise table isolates
+    precisely the non formal content of a proposed solution.
+  authors:
+    - Li Haiquan
+  license: GPL-3.0
+  responsible_maintainers:
+    - Li Haiquan
+classification:
+  arxiv:
+    - math.NT
+    - cs.LO
+  msc2020:
+    - "11M26"
+    - "03B35"
+automation:
+  methods:
+    - method: AI-assisted
+      notes: The eleven modules were produced with AI assistance and machine checked.
+review:
+  status: author-verified
+  notes: >
+    Two independent reproduction runs completed with all modules exiting 0; the
+    axiom audit shows only [propext, Quot.sound, Classical.choice]. See
+    Verification_Report.md and the third party reproduction records in the
+    repository.
+sources:
+  - title: The Successful Mathematical Derivation of the Forward-Reverse Reversible Bidirectional Closure of the Riemann Hypothesis
+    type: paper
+    relationship: formalizes
+    authors:
+      - Li Haiquan
+    note: The preprint whose conditional chain this development formalizes.
+  - title: Über die Anzahl der Primzahlen unter einer gegebenen Grösse
+    type: paper
+    relationship: background
+    authors:
+      - Bernhard Riemann
+  - title: Problems of the Millennium, The Riemann Hypothesis
+    type: paper
+    relationship: background
+    authors:
+      - Enrico Bombieri
+related_formalizations: []
