@@ -54,8 +54,9 @@ def iB : Fin 4 → Fin 4 := ![2, 3, 0, 1]
 noncomputable def Kquad (C : ℝ) (w : Fin 4 → ℝ × ℝ) : ℝ :=
   (C / 4) * ∑ i : Fin 4, (dot (w i) (JA (w (iA i))) + dot (w i) (JB (w (iB i))))
 
-/-- The unitarity gate: at every non real zero of `f` the orbit gradient energy
-    is strictly positive. -/
+/-- The unitarity gate: at every zero of `f` with `Re ≠ 1/2` and `Im ≠ 0`
+    (off-critical-line non-real zeros) the orbit gradient energy is strictly
+    positive. -/
 def SatisfiesUnitarity (C : ℝ) (f : ℂ → ℂ) : Prop :=
   ∀ σ t : ℝ, f (↑σ + Complex.I * ↑t) = 0 → σ ≠ 1 / 2 → t ≠ 0 →
     0 < Kquad C (orbitGrad f σ t)

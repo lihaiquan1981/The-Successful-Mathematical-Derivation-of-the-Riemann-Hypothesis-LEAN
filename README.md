@@ -5,8 +5,8 @@ Email: lihaiquan@jluct.edu.cn
 
 # Machine Verification of the Riemann Hypothesis in Lean 4 · Project Manifest (README)
 
-Reference paper: *A Successful Mathematical Derivation of the Riemann Hypothesis
-via Bidirectional Forward-Reverse Closure*.
+Reference paper: *The Successful Mathematical Derivation of the Forward-Reverse
+Reversible Bidirectional Closure of the Riemann Hypothesis*.
 
 This folder is the English edition of the verification package. All file names,
 module names, and in-file documentation are in English, matching the forthcoming

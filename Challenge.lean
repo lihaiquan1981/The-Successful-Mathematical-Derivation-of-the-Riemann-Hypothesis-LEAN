@@ -10,14 +10,17 @@ the critical strip, with the nontrivial zeros of the Riemann zeta function.
 This module states one theorem. For a channel coupling `C > 0` and an entire
 function `g` agreeing with `xi` off `{0, 1}`, the unitarity gate
 `SatisfiesUnitarity C g` requires strictly positive energy of the forced four
-point orbit gradient at every non real zero of `g`. Under double reflection
-symmetry, simplicity of the zeros, the gate, and the classical input `hζ` (zeta
-is negative on the real interval `(0, 1)`), every zero of `xi` off `{0, 1}` lies
-on the critical line `Re s = 1 / 2`.
+point orbit gradient at every zero of `g` with `Re s ≠ 1/2` and `Im s ≠ 0`
+(the non-real off-critical-line zero configurations classified in the paper's
+Corollary 9.3B(iii)). Under double reflection symmetry, simplicity of the zeros,
+the gate, and the classical input `hζ` (zeta is negative on the real interval
+`(0, 1)`), every zero of `xi` off `{0, 1}` lies on the critical line
+`Re s = 1 / 2`.
 
 This is a conditional statement: every premise is an explicit hypothesis, not a
-theorem of this development. The associated paper argues for their discharge in
-a non formal framework; that argument is deliberately outside this artifact.
+theorem of this development. The associated paper (and Riemann's 1859 German
+source as object-anchor) argues for discharge of the named premises in a
+non-formal framework; that argument is deliberately outside this artifact.
 
 Layout follows the Palomar template: Challenge depends only on Mathlib; the
 compared declaration is the dotted name `RHConditional.riemann_hypothesis_conditional`.
@@ -62,17 +65,18 @@ def iB : Fin 4 → Fin 4 := ![2, 3, 0, 1]
 noncomputable def Kquad (C : ℝ) (w : Fin 4 → ℝ × ℝ) : ℝ :=
   (C / 4) * ∑ i : Fin 4, (dot (w i) (JA (w (iA i))) + dot (w i) (JB (w (iB i))))
 
-/-- The unitarity gate: at every non real zero of `f` the orbit gradient energy
-    is strictly positive. -/
+/-- The unitarity gate: at every zero of `f` with `Re ≠ 1/2` and `Im ≠ 0`
+    (off-critical-line non-real zeros) the orbit gradient energy is strictly
+    positive. -/
 def SatisfiesUnitarity (C : ℝ) (f : ℂ → ℂ) : Prop :=
   ∀ σ t : ℝ, f (↑σ + Complex.I * ↑t) = 0 → σ ≠ 1 / 2 → t ≠ 0 →
     0 < Kquad C (orbitGrad f σ t)
 
-/-- **Conditional Riemann Hypothesis for xi.** Let `g` be an entire function
-    agreeing with Riemann's xi function off `{0, 1}`, doubly reflected, with only
-    simple zeros. For a channel coupling `C > 0`, under the unitarity gate on `g`
-    and the classical fact that zeta is negative on `(0, 1)`, every zero of xi
-    off `{0, 1}` lies on the critical line `Re s = 1 / 2`. -/
+/-- **Conditional reduction for xi.** Let `g` be an entire function agreeing
+    with Riemann's xi function off `{0, 1}`, doubly reflected, with only simple
+    zeros. For a channel coupling `C > 0`, under the unitarity gate on `g` and
+    the classical fact that zeta is negative on `(0, 1)`, every zero of xi off
+    `{0, 1}` lies on the critical line `Re s = 1 / 2`. -/
 theorem riemann_hypothesis_conditional (C : ℝ) (hC : 0 < C)
     (g : ℂ → ℂ)
     (hg : Differentiable ℂ g)
