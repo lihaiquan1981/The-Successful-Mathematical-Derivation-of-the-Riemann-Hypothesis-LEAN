@@ -1,58 +1,90 @@
 version: v0.4
 project:
-  name: Structural dimension reduction for doubly reflected entire functions (Theorem 9.3A), machine-verified in Lean 4
+  name: Machine-verified theory of doubly reflected systems: structural factorization, germ reflection structure, heat-kernel spectral limits, and real-axis positivity of Riemann's xi
   description: |
-    This development is a Lean 4 formalization of Theorem 9.3A of the preprint
-    "The Successful Mathematical Derivation of the Forward-Reverse Reversible
-    Bidirectional Closure of the Riemann Hypothesis" (Li Haiquan): every
-    entire function f : ℂ → ℂ satisfying the double-reflection symmetry
-    f(s) = f(1 − s) and f(conj s) = conj (f s) admits a unique representation
-    f(s) = g((s − 1/2)²) with g entire and real-valued on the real axis.
+    This development is a Lean 4 formalization of a theorem group from the
+    preprint "The Successful Mathematical Derivation of the Forward-Reverse
+    Reversible Bidirectional Closure of the Riemann Hypothesis" (Li Haiquan),
+    covering the unconditional mathematical content of Sections 9.3A, 9.4,
+    and 11.3 together with the heat-kernel spectral limit of Lemma 9.5C.
 
-    CONTRIBUTION. The compared theorem structural_reduction_9_3A is an
-    unconditional structural result: its only premises are entireness and the
-    double-reflection symmetry, and its conclusion — the existence and
-    uniqueness of the representing function g — is proved with zero sorry
-    under only the three standard Lean axioms (propext, Quot.sound,
-    Classical.choice). The theorem has independent mathematical value: it
-    reduces the two-dimensional zero-distribution analysis of the whole class
-    of doubly reflected entire functions to a one-dimensional entire function
-    of a squared variable, and it is the standalone module Theorem_9_3A of
-    this repository. The supporting machinery in the proof (Taylor series of
-    entire functions, even-part extraction, the identity theorem, and a
-    coefficient-reality induction) is classical complex analysis, machine
-    checked line by line.
+    CONTRIBUTION. The registered theorem group consists of six declarations,
+    all proved with zero sorry under only the three standard Lean axioms
+    (propext, Quot.sound, Classical.choice):
+    (1) structural_reduction_9_3A (Section 9.3A): every entire function f
+    satisfying the double-reflection symmetry f(s) = f(1 − s) and
+    f(conj s) = conj (f s) factorizes uniquely through the symmetry quotient
+    q(s) = (s − 1/2)² as f = g ∘ q, with g entire and real-valued on the
+    real axis; the zero set of f is the q-preimage of the zero set of g,
+    forcing conjugate-pair symmetry of zeros and the three-way location
+    classification (critical line / real axis / off-critical deviation) by
+    the sign of the real values q(s);
+    (2) germ_structure_9_4 (Lemma 9.4): the reflection structure of the
+    imaginary part v = Im f — antisymmetry under both reflections,
+    vanishing on the critical line and the real axis, and the
+    Cauchy–Riemann nondegeneracy of the real gradient at any simple zero;
+    (3) real_axis_positivity_11_3 (Lemma 11.3): for real x ∉ {0, 1},
+    Riemann's xi(x) is a strictly positive real number, under the single
+    named classical premise hζ (zeta strictly negative on (0, 1) — a
+    classical fact of analytic number theory, not a zero-location
+    certificate);
+    (4) xi_ne_zero_of_quotient_nonneg: if the quotient coordinate
+    w = (s − 1/2)² is a nonnegative real (w ≠ 1/4), then ξ(s) ≠ 0 — the
+    zero exclusion on the nonnegative part of the quotient range;
+    (5) critical_line_lock: if w = (s − 1/2)² is a negative real, then
+    Re s = 1/2 — the critical line as the exact preimage of the negative
+    half-axis under the symmetry quotient. Unconditional;
+    (6) heat_kernel_spectral (Lemma 9.5C): for the two-channel geometric
+    energy of a field on the four-point orbit of the reflection pair, with
+    Gaussian heat-kernel regularization of parameter α, (i) the rescaled
+    energy E(α)/α converges (α → 0⁺) to the explicit quadratic form on the
+    eight-dimensional orbit-gradient space; (ii) on the chi_AB-type
+    gradient configurations the limit form is strictly negative definite,
+    ⟨W, K̃ W⟩ = −(C/2)‖W‖² < 0. The convergence in (i) is obtained in the
+    repository through a quantitative main-term-plus-remainder
+    decomposition with an O(√α) error bound (energy_error_bound); the
+    supporting analysis is genuine: Gaussian second-moment identities,
+    exact third- and fourth-moment scaling laws m₃(α) = (√α)³C₃,
+    m₄(α) = α²C₄, and eigenvalue inheritance from the four-mode spectral
+    decomposition of the orbit kernel. The supporting machinery (Taylor series of entire
+    functions, coefficient reality induction, the analytic identity
+    theorem, Gaussian moment theory in Mathlib's measure-theoretic
+    framework) is machine-checked line by line.
 
     REPOSITORY EXTENSION. The repository additionally formalizes the
-    paper's conditional chain on top of this theorem: Lemma 9.4 (chi_AB
-    structure of v = Im f), Lemma 9.5C (heat-kernel regularization limit of
-    the two-channel orbit energy), Lemma 11.3 (real-axis positivity of
-    Riemann's xi), the m-th order jet generalization (Note 9.5B), and a final
-    assembly giving an explicit named-premise conditional statement of the
-    Riemann Hypothesis for xi. That chain is an extension of this artifact:
-    its unitarity premise is documented in the repository as an
-    inconsistent-at-counterexamples certificate, and its discharge is argued
-    in the preprint, not inside Lean.
+    paper's conditional chain assembled on these results: the m-th order
+    jet generalization (Note 9.5B) and a final assembly giving an explicit
+    named-premise conditional statement of the Riemann Hypothesis for xi.
+    That chain is an extension of this artifact: its unitarity premise is
+    documented in the repository as an inconsistent-at-counterexamples
+    certificate, and its discharge is argued in the preprint, not inside
+    Lean.
 
-    SCOPE AND GAP. The registered result (structural_reduction_9_3A) is
-    unconditional: no unitarity gate, no zero-location hypothesis, and no
-    analytic number theory input appears in its statement or proof. The
-    repository extension described above is conditional and is not part of
-    the compared declaration.
+    SCOPE AND GAP. Declarations (1), (2), (5), and (6) are fully
+    unconditional. Declarations (3) and (4) carry one named classical
+    premise (hζ) each, matching the preprint's own formulation
+    ("combining known classical facts"); hζ is a fact of analytic number
+    theory, not a gate on zero configurations. No unitarity premise and no
+    zero-location hypothesis appears anywhere in the registered group.
+    The FieldData structure in (6) carries the standard first-order Taylor
+    remainder bound of a C²-smooth bounded field — an analysis hypothesis.
+    The repository extension described above is conditional and is not part
+    of the compared declarations.
 
-    EVIDENCE. Eleven modules, zero sorry, only the three standard Lean axioms
-    (propext, Quot.sound, Classical.choice). All modules compiled with exit
-    code 0 in reproduction runs on a separate build environment (Windows,
-    Lean 4.34.0-rc2, mathlib cache in place); per-module build logs and a
-    committed SHA-256 manifest are in the repository. The prior Palomar
-    mechanical verification of this repository succeeded before the metadata
-    and comparator revisions described here.
+    EVIDENCE. Eleven modules, zero sorry, only the three standard Lean
+    axioms (propext, Quot.sound, Classical.choice). All modules compiled
+    with exit code 0 in reproduction runs on a separate build environment
+    (Windows, Lean 4.34.0-rc2, mathlib cache in place); per-module build
+    logs and a committed SHA-256 manifest are in the repository. The prior
+    Palomar mechanical verification of this repository succeeded before
+    the metadata and comparator revisions described here.
 
-    AUDIENCE. Complex analysis and formal verification: a machine-checked
-    structural classification of doubly reflected entire functions (the
-    symmetry-forced form f(s) = g((s − 1/2)²)), reusable as a lemma in any
-    zero-distribution study of the class, including the conditional Riemann
-    Hypothesis chain built on it in the same repository.
+    AUDIENCE. Complex analysis, spectral theory, analytic number theory,
+    and formal verification: a machine-checked theorem group covering the
+    structure, germ reflection laws, heat-kernel spectral limits, and
+    real-axis positivity of doubly reflected systems and Riemann's xi,
+    reusable in zero-distribution studies of the class and in energy-method
+    analyses of reflection-symmetric systems.
   authors:
     - Li Haiquan
   license: GPL-3.0
@@ -61,10 +93,12 @@ project:
 classification:
   arxiv:
     - math.CV
+    - math.FA
     - math.NT
     - cs.LO
   msc2020:
     - "30D20"
+    - "47A10"
     - "11M26"
     - "03B35"
 automation:
@@ -98,9 +132,10 @@ sources:
     doi: "10.5281/zenodo.22858922"
     note: >
       Versioned Zenodo archive containing the full preprint text together
-      with the Lean formalization folder. Section 9.3A of the preprint is
-      the registered result of this submission. The preprint is also
-      mirrored at OSF (https://doi.org/10.17605/OSF.IO/VGBTP).
+      with the Lean formalization folder. Sections 9.3A, 9.4, 9.5C and 11.3
+      of the preprint supply the registered results of this submission.
+      The preprint is also mirrored at OSF
+      (https://doi.org/10.17605/OSF.IO/VGBTP).
   - title: Preprint mirror with time-stamped registration record (OSF)
     type: paper
     relationship: formalizes

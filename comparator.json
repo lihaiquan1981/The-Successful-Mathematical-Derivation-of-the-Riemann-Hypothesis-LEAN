@@ -2,7 +2,12 @@
   "challenge_module": "Challenge",
   "solution_module": "Solution",
   "theorem_names": [
-    "RHStructural.structural_reduction_9_3A"
+    "RHStructural.structural_reduction_9_3A",
+    "RHStructural.germ_structure_9_4",
+    "RHStructural.real_axis_positivity_11_3",
+    "RHStructural.xi_ne_zero_of_quotient_nonneg",
+    "RHStructural.critical_line_lock",
+    "RHHeat.heat_kernel_spectral"
   ],
   "definition_names": [],
   "permitted_axioms": [
