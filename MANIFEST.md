@@ -14,7 +14,7 @@ that passed compilation.
 - Reproduction: see `reproduce_build.sh`; complete per-module build logs in
   `build_logs/`
 
-## 1. Lean sources (11 modules)
+## 1. Lean sources (12 modules)
 
 | File | Module / namespace | Paper section | SHA-256 |
 |---|---|---|---|
@@ -29,6 +29,7 @@ that passed compilation.
 | `Note_9_5B_mJet.lean` | `RHM` | Note 9.5B (¶666–698) / Note 11.2.3 | `abf40336…c40240ee` |
 | `Final_Assembly_Unconditional.lean` | `RHFinalM` | `RH_xi_unconditional` (hE_pos with zero witness) | `c37f387e…9a4d1ea4` |
 | `Lemma_9_5C_TaylorRemainder.lean` | `RHT` | Lemma 9.5C Taylor-remainder upgrade | `3db25458…f8d7c2ff` |
+| `Section5A8_Unitarity.lean` | `Section5A8` | 5A.8 five-way equivalence under `hSpec` | `cfb22a26…f6a6a22d` |
 Full 64-digit checksums in Section 4.
 
 ## 2. Auxiliary files
@@ -37,10 +38,11 @@ Full 64-digit checksums in Section 4.
 |---|---|
 | `README.md` | Build instructions, module chain, explicit premise list |
 | `Verification_Report.md` | Master verification report (incl. the premise table ↔ the paper's "two conditions" verbatim correspondence) |
+| `Coverage_Map.md` | V2 section-to-module map: load-bearing closure, explicit premises, and passages that are not machine obligations |
 | `reproduce_build.sh` | One-command reproduction script (topological-order compilation) |
 | `MANIFEST.md` | This manifest |
-| `*.lean.txt` (11) | Plain-text copies of the `.lean` sources, for reviewers without a Lean environment |
-| `build_logs/*.log` (11) | Complete per-module `lake env lean` output (incl. `#print axioms` audits), for re-checker comparison |
+| `*.lean.txt` (12) | Plain-text copies of the `.lean` sources, for reviewers without a Lean environment |
+| `build_logs/*.log` (12) | Complete per-module `lake env lean` output (incl. `#print axioms` audits), for re-checker comparison |
 
 ## 3. Build-log directory
 
@@ -57,6 +59,7 @@ Full 64-digit checksums in Section 4.
 | `build_logs/Lemma_9_5C_TaylorRemainder.log` | RHT | 0 |
 | `build_logs/Theorem_9_3A.log` | RH93 | 0 |
 | `build_logs/MotherEquation_CoreVerification.log` | single file | 0 |
+| `build_logs/Section5A8_Unitarity.log` | Section5A8 | 0 |
 
 ## 4. Full SHA-256 table
 
@@ -72,6 +75,7 @@ abf403369b4a07f705678a85950a38791979a844d06204e7dc5f26bec40240ee  Note_9_5B_mJet
 9ab78bcef382706708ac9b9618ef8e54b950d065cdd960b578df030639265d55  Theorem_9_3A.lean
 056e461585fbfcf967e2d9aff2ac8cff7612c1b3d9cfe4259e6fa5ebe9cc8c45  Theorem_9_5_Closure.lean
 366153ea627e2c6d962afd3110ccbc8e1ca2766e36daa1ffd0ee7d941217dcd6  Unitarity_Assembly.lean
+cfb22a260650878183770c3cf617cc871cea36eb7a0530bd7de8c0a1f6a6a22d  Section5A8_Unitarity.lean
 ```
 
 (Each `.lean.txt` copy is bit-identical to its `.lean` source and shares the

@@ -29,6 +29,7 @@ Email: lihaiquan@jluct.edu.cn
 | `Note_9_5B_mJet.lean` | `RHM` | Note 9.5B (¶666–698) / Note 11.2.3 (¶961–972): the jet machine chain for zeros of arbitrary multiplicity m — existence of the first nonzero order, m-th order pairing law, orbit m-uniformity, `theorem_9_5_multiplicity` / `theorem_10_unconditional` |
 | `Final_Assembly_Unconditional.lean` | `RHFinalM` | Unconditional assembly: `RH_xi_unconditional` — **the simplicity hypothesis `hg_simple` has been eliminated from the premises** (g not identically zero is machine-discharged via Lemma 11.3; neither the real nor the non-real zero branch depends on simplicity) |
 | `Lemma_9_5C_TaylorRemainder.lean` | `RHT` | Lemma 9.5C upgrade: `taylor_remainder_C2` promotes `FieldData.htaylor` from a pointwise hypothesis to a theorem (segment mean-value theorem + Lipschitz chain, fully machine-closed); `FieldData.ofContDiff` constructs field data from a C² compactly supported field |
+| `Section5A8_Unitarity.lean` | `Section5A8` | 5A.8: under the explicit premise `hSpec : Set.range α = Z`, the five statements (real zero set, real spectrum, diagonal self-adjointness, strongly continuous modulus-one phase, real basis energy) are equivalent. This file does not prove that the roots are real |
 
 ## 1. Closed-Loop Structure
 
@@ -82,8 +83,22 @@ pointing at the workspace):
 ALL_DONE
 ```
 
+The twelfth module does not import the eleven, and none of the eleven import it, so those eleven logs were left as compiled. `Section5A8_Unitarity.lean` was compiled on its own:
+
+```
+=== Section5A8_Unitarity          exit: 0 ===  (8 audits)
+```
+
+Log coverage, stated separately:
+
+- Main build logs `build_logs/`: 12/12, exit code 0, zero sorry, axioms `[propext, Classical.choice, Quot.sound]`.
+- Third-party reproduction logs `third-party independent reproduction/`: 12/12. The 2026-09-20 batch on host PC-202607051001 covers the first eleven. `Section5A8_Unitarity.log` was reproduced on 2026-10-22 on the same host and the same Lean commit `6a10ac8`, exit code 0, elapsed 21973 ms. That run is not inside the 2026-09-20 timing total.
+- `_run_logs/`: runtime traces, 12/12. These traces do not add proof content.
+
 The nine-module chain contributes 55 `#print axioms` outputs
-(8+6+12+2+11+4+7+3+2); the two standalone modules contribute 5 and 12.
+(8+6+12+2+11+4+7+3+2); the two standalone modules contribute 5 and 12;
+`Section5A8` contributes 8. Every audit, including the eight new ones, is
+`[propext, Classical.choice, Quot.sound]`.
 
 All `#print axioms` outputs are identical:
 
@@ -261,6 +276,10 @@ unchanged), with the verbatim same conclusion.
 - For the realization of ξ, the truth of the premise is carried outside Lean
   by the paper's completeness of exclusion and is not adjudicated by Lean —
   this is a division of labor by design, not a gap in the formalization.
+- `Section5A8.five_eight_equiv` is the 5A.8 criterion: under `hSpec`
+  (`Spec L = Z`), the second-gate unitarity statement is equivalent to the
+  real-spectrum statement. It does not prove that the roots are real, and it
+  does not derive P1 from the German text. Gate 1 stays outside this file.
 
 ## 7. How to Re-Check
 

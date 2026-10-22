@@ -38,6 +38,7 @@ two editions, this English edition prevails.
 | `Note_9_5B_mJet.lean` | `RHM` | Note 9.5B / Note 11.2.3 (higher-order generalization to multiple zeros): existence of the first nonzero jet order, m-th order pairing law, orbit m-uniformity, `theorem_9_5_multiplicity`, `theorem_10_unconditional` | Theorem_9_5_Closure + Lemma_11_3 |
 | `Final_Assembly_Unconditional.lean` | `RHFinalM` | Unconditional assembly: `RH_xi_unconditional` — **hg_simple (simplicity of zeros) eliminated**; `hg_ne` discharged by machine via Lemma 11.3 | Note_9_5B_mJet |
 | `Lemma_9_5C_TaylorRemainder.lean` | `RHT` | Lemma 9.5C upgrade: `taylor_remainder_C2` (htaylor promoted from hypothesis to theorem), `FieldData.ofContDiff`, `lemma_9_5C_unconditional` | Lemma_9_5C |
+| `Section5A8_Unitarity.lean` | `Section5A8` | 5A.8 five-way equivalence under the explicit premise `hSpec : Spec L = Z`. Does not prove that the roots are real | mathlib only |
 
 ## Deliverables Directory
 
@@ -63,7 +64,7 @@ git clone --depth 1 --branch v4.34.0-rc2 https://github.com/leanprover-community
 cd mathlib4
 lake exe cache get        # 8747 precompiled oleans
 
-# 3. Copy the eleven .lean files of this folder into the workspace root
+# 3. Copy the twelve .lean files of this folder into the workspace root
 #    (file names are already the module names — no renaming needed)
 
 # 4. Compile in topological order (produces importable .olean/.ilean)
@@ -73,11 +74,16 @@ for m in Lemma_9_5C Unitarity_Assembly Lemma_9_4 Theorem_9_5_Closure \
          Final_Assembly_Unconditional Lemma_9_5C_TaylorRemainder; do
   lake env lean -o $m.olean -i $m.ilean $m.lean || exit 1
 done
-# All nine steps must exit with code 0; the #print axioms blocks at the end of
-# each file produce the outputs listed in Section 2 of Verification_Report.md.
-# Theorem_9_3A and MotherEquation_CoreVerification are standalone:
+# The loop plus the three standalone commands are the twelve modules.
+# Each must exit with code 0. The #print axioms blocks produce the outputs
+# listed in Section 2 of Verification_Report.md.
+# Theorem_9_3A, MotherEquation_CoreVerification, and Section5A8_Unitarity
+# are standalone. Section5A8_Unitarity imports mathlib only.
+# MotherEquation_CoreVerification imports nothing; lake env still selects the
+# pinned toolchain of this mathlib checkout.
 lake env lean -o Theorem_9_3A.olean -i Theorem_9_3A.ilean Theorem_9_3A.lean
-lean MotherEquation_CoreVerification.lean   # zero mathlib dependency
+lake env lean -o Section5A8_Unitarity.olean -i Section5A8_Unitarity.ilean Section5A8_Unitarity.lean
+lake env lean -o MotherEquation_CoreVerification.olean -i MotherEquation_CoreVerification.ilean MotherEquation_CoreVerification.lean
 ```
 
 Compilation dependency graph:
@@ -91,7 +97,7 @@ Theorem_9_5_Closure + Lemma_11_3 ──→ Note_9_5B_mJet ──→ Final_Assemb
 
 Lemma_9_5C ──→ Lemma_9_5C_TaylorRemainder   (Taylor remainder upgrade, independent branch)
 
-Theorem_9_3A, MotherEquation_CoreVerification   (standalone)
+Theorem_9_3A, MotherEquation_CoreVerification, Section5A8_Unitarity   (standalone)
 ```
 
 ## Explicit Premises (chain-wide interface hypotheses)
@@ -115,7 +121,8 @@ Theorem_9_3A, MotherEquation_CoreVerification   (standalone)
    Verification Report).
 
 All appear as explicit theorem parameters — not axioms, not sorries. All 55
-`#print axioms` outputs are `[propext, Classical.choice, Quot.sound]`.
+`#print axioms` outputs of that chain, and the 8 outputs of
+`Section5A8_Unitarity.lean`, are `[propext, Classical.choice, Quot.sound]`.
 
 **Eliminated**: `hg_simple` (simplicity of zeros) — the premises of the
 unconditional assembly `RH_xi_unconditional` no longer contain any assumption
@@ -123,8 +130,10 @@ on the multiplicity of zeros (see Sections 3–4 of the Verification Report).
 
 ## Deliverables
 
-- Eleven `.lean` source files;
+- Twelve `.lean` source files;
 - `Verification_Report.md`: coverage list, compilation evidence, axiom audit,
   methodological boundaries;
+- `Coverage_Map.md`: which V2 sections the twelve modules lock, which
+  hypotheses stay explicit, and which passages are not machine obligations;
 - This `README.md`: version pinning, section correspondence, build and
   re-check instructions.
