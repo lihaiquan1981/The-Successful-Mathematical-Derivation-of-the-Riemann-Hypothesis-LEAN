@@ -1,0 +1,8 @@
+'Section5A8.five_eight_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.selfAdjoint_iff_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.unitary_iff_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.energy_iff_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.spec_iff_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.roots_iff_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.mode_strongly_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Section5A8.energy_derivative_cancels' depends on axioms: [propext, Classical.choice, Quot.sound]

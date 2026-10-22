@@ -1,0 +1,12 @@
+'MotherEquation.gK_eig_chiAB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.spectrum_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.energy_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.chiAB_pure_energy_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.collapse_eig_sym' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.jet_eigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.jet_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.jet_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.phase_cliff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.mother_equation_core_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MotherEquation.V4.chiAB_is_hom' does not depend on any axioms
+'MotherEquation.V4.orbit_generic_distinct' does not depend on any axioms
