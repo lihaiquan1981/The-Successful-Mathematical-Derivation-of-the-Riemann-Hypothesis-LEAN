@@ -1,0 +1,22 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# build command: lake env lean -o Lemma_9_4.olean -i Lemma_9_4.ilean Lemma_9_4.lean
+# exit code: 0
+# toolchain: Lean (version 4.34.0-rc2, x86_64-unknown-linux-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (lake exe cache get)
+# source sha256: 50999ed5f77d5ec1b636c1b0ae826d7a818921a9d9b226187b94b0b0b25eab4a
+
+'RH94.vim_reflA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.vim_reflB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.vim_critical_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.vim_real_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.hasDerivAt_vim_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.hasDerivAt_vim_y' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.nablaV_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.nablaV_reflA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.nablaV_reflB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.orbitGrad_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.lemma_9_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH94.hgrad_of_simple_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
