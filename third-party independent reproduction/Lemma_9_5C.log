@@ -1,0 +1,22 @@
+# Li Haiquan
+# Jilin University of Chemical Technology, China
+# ORCID: https://orcid.org/0009-0000-7365-6535
+# Email: lihaiquan@jluct.edu.cn
+# third-party independent reproduction
+# host: PC-202607051001
+# build command: lake env lean -o Lemma_9_5C.olean -i Lemma_9_5C.ilean Lemma_9_5C.lean
+# exit code: 0
+# elapsed_ms: 69594
+# toolchain: Lean (version 4.34.0-rc2, x86_64-w64-windows-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)
+# mathlib: v4.34.0-rc2 (local cache already present; this run did not download)
+# source sha256: 2e4e009c89af132ba032e96406dd56560fe0a53b1424afe9a6a93d225d387234
+# source: parent folder, Lemma_9_5C.lean
+
+'RH95C.moment2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.channel_main' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.channel_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.energy_error_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.heat_kernel_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.Kquad_chiAB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.Kquad_chiAB_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RH95C.lemma_9_5C' depends on axioms: [propext, Classical.choice, Quot.sound]
